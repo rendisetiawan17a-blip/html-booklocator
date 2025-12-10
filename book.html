@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Model Pencarian Buku</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 15px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 6px;
+            font-size: 13px;
+        }
+        th {
+            background-color: #eee;
+        }
+        input {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background:#4CAF50;
+            border:none;
+            color:white;
+            border-radius:5px;
+            cursor:pointer;
+            margin-top:10px;
+        }
+        button:hover {
+            background:#45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Model Pencarian Buku</h1>
+
+        <label>Cari buku:</label>
+        <input type="text" id="searchInput" placeholder="Cari berdasarkan judul, pengarang, ISBN, atau rak..." onkeyup="searchTable()">
+
+        <table id="bookTable">
+            <thead>
+                <tr>
+                    <th>Judul Buku</th>
+                    <th>Nama Pengarang</th>
+                    <th>ISBN</th>
+                    <th>No Rak</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Contoh Judul Buku</td>
+                    <td>Nama Pengarang</td>
+                    <td>123456789</td>
+                    <td>R-01</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function searchTable() {
+            const input = document.getElementById("searchInput").value.toLowerCase();
+            const rows = document.querySelectorAll("#bookTable tbody tr");
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll("td");
+                let match = false;
+
+                cells.forEach(cell => {
+                    if (cell.innerText.toLowerCase().includes(input)) {
+                        match = true;
+                    }
+                });
+
+                row.style.display = match ? "" : "none";
+            });
+        }
+    </script>
+    <div class="container" style="margin-top:30px;">
+        <h2>Tambah Buku Baru</h2>
+        <label>Judul Buku:</label>
+        <input type="text" id="judulInput" placeholder="Masukkan judul buku...">
+        <label>Nama Pengarang:</label>
+        <input type="text" id="pengarangInput" placeholder="Masukkan nama pengarang...">
+        <label>ISBN:</label>
+        <input type="text" id="isbnInput" placeholder="Masukkan ISBN...">
+        <label>No Rak:</label>
+        <input type="text" id="rakInput" placeholder="Masukkan nomor rak...">
+        <button onclick="addBook()" style="margin-top:10px;padding:10px 15px;border:none;background:#4CAF50;color:white;border-radius:5px;cursor:pointer;">Tambah Buku</button>
+    </div>
+
+    <script>
+        function addBook() {
+            const judul = document.getElementById('judulInput').value;
+            const pengarang = document.getElementById('pengarangInput').value;
+            const isbn = document.getElementById('isbnInput').value;
+            const rak = document.getElementById('rakInput').value;
+
+            if (!judul || !pengarang || !isbn || !rak) {
+                alert('Semua kolom harus diisi!');
+                return;
+            }
+
+            const table = document.querySelector('#bookTable tbody');
+            const newRow = document.createElement('tr');
+
+            newRow.innerHTML = `
+                <td>${judul}</td>
+                <td>${pengarang}</td>
+                <td>${isbn}</td>
+                <td>${rak}</td>
+            `;
+
+            table.appendChild(newRow);
+
+            document.getElementById('judulInput').value = '';
+            document.getElementById('pengarangInput').value = '';
+            document.getElementById('isbnInput').value = '';
+            document.getElementById('rakInput').value = '';
+        }
+    </script>
+</body>
+</html>
